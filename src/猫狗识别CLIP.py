@@ -1,4 +1,4 @@
-import os  #Operating System（操作系统）它就是 Python 自带的、用来跟你的电脑文件夹、文件打交道的工具。
+import os  # Operating System（操作系统）它就是 Python 自带的、用来跟你的电脑文件夹、文件打交道的工具。
 import torch
 import clip
 from PIL import Image
@@ -30,9 +30,10 @@ for real_label, class_name in enumerate(["cat", "dog"]):
 
         with torch.no_grad():  # 关闭梯度运算，只推理，不训练
             logits_per_image,_= model(image, text)  # 计算相似度
-            probs = logits_per_image.softmax(dim=-1).cpu().numpy() # 把相似度打分转为概率，归一化0-1，转到cpu，将张量变回numpy数组
+            probs = logits_per_image.softmax(dim=-1).cpu().numpy()  # 把相似度打分转为概率，归一化0-1，转到cpu，将张量变回numpy数组
         # 拿到预测结果
         pred_idx = probs[0].argmax()  # 找probs【0】最大数的下标
+        print(f"cat: {probs[0][0]:.4f}  dog: {probs[0][1]:.4f} | 真实：{class_name}  预测：{['cat', 'dog'][pred_idx]}")
         cnt += 1
         if pred_idx == real_label:
             right += 1
