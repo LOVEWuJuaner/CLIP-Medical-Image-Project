@@ -10,7 +10,7 @@ script_path = os.path.abspath(__file__)
 # 获取脚本所在目录（即 src 目录）
 src_dir = os.path.dirname(script_path)
 # 从 src 目录向上跳一级到项目根目录，再拼接数据集路径
-DATASET_ROOT = os.path.join(src_dir, "..", "data", "raw", "dog&cat_set")
+DATASET_ROOT = os.path.join(src_dir, "..", "data", "sample", "dog&cat_set")
 # 标准化路径（把 ../ 解析成真实路径）
 DATASET_ROOT = os.path.normpath(DATASET_ROOT)
 
