@@ -1,0 +1,17 @@
+experiment_id: 2
+name: pneumonia_vs_normal
+
+data:
+  path: data/raw/xray_dataset_covid19/train
+  image_size: 224
+
+model:
+  name: ViT-B/32
+  pretrained: true
+
+inference:
+  batch_size: 8
+
+input_texts:
+  - "a normal chest x-ray"
+  - "a chest x-ray with pneumonia"
