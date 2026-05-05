@@ -13,5 +13,9 @@ inference:
   batch_size: 8
 
 input_texts:
-  - "a normal chest x-ray"
-  - "a chest x-ray with pneumonia"
+  - "a radiology chest x-ray of a healthy patient"
+  - "a radiology image showing pneumonia in the lungs"
+
+output_range: # 需要与两个文件夹的名字保持一致
+  - "NORMAL"
+  - "PNEUMONIA"

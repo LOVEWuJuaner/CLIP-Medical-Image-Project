@@ -7,6 +7,7 @@ from pathlib import Path  # Pathlib 可以更方便地处理路径问题，自�
 
 cnt = 0
 right = 0
+image_index = 1
 
 # 选择实验配置文件
 config_path = Path(__file__).parent.parent / "experiments" / "experiment_2" / "config.yaml"
@@ -21,6 +22,7 @@ data_path = BASE_DIR / config["data"]["path"]  # 自动拼接成绝对路径
 image_size = config["data"]["image_size"]  # 图片预处理尺寸
 batch_size = config["inference"]["batch_size"]  # 批量大小（可以暂时没用）
 texts = config["input_texts"]  # 文本描述列表
+output_range = config["output_range"]
 
 print("数据路径:", data_path)
 print("batch size:", batch_size)
@@ -31,7 +33,7 @@ model, preprocess = clip.load("ViT-B/32", device=device)  # 加载CLIP模型，�
 text_tokens = clip.tokenize(texts).to(device)  # 文本 token 化
 
 # 遍历每个类别
-for real_label, class_name in enumerate(['NORMAL', 'PNEUMONIA']):
+for real_label, class_name in enumerate(output_range):
     # 拼接文件夹路径
     # 注意：class_name 对应 data_path 下的文件夹名
     folder_path = data_path / class_name
@@ -52,8 +54,9 @@ for real_label, class_name in enumerate(['NORMAL', 'PNEUMONIA']):
 
         # 拿到预测结果
         pred_idx = probs[0].argmax()  # 找 probs[0] 最大数的下标
-        print(f"{texts[0]}: {probs[0][0]:.4f}  {texts[1]}: {probs[0][1]:.4f} | 真实：{class_name}  预测：{['NORMAL', 'PNEUMONIA'][pred_idx]}")
+        print(f"{image_index} {texts[0]}: {probs[0][0]:.4f}  {texts[1]}: {probs[0][1]:.4f} | 真实：{class_name}  预测：{output_range[pred_idx]}")
         cnt += 1
+        image_index += 1
         if pred_idx == real_label:
             right += 1
 
